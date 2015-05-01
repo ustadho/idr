@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="SuratJalan"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="595"
+		 pageHeight="421"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="toko" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["Rejeki Makmur"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="alamat1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["Ruko Tidar Mas Square C16"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="alamat2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["Surabaya - 6102 - Indonesia"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="telp" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["Ph. 08123123123, 031-30423123"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="email" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["rejeki.makmur@yahoo.com"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idPenjualan" isForPrompting="false" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(7)]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[select * from fn_ar_surat_jalan($P{idPenjualan}) as (id_customer bigint, invoice_no varchar, kirim_ke_nama varchar, kirim_ke_alamat text, kirim_ke_kota varchar, 
+id_expedisi varchar, nama_expedisi varchar, no_sj varchar, tgl_sj date, hormat_kami varchar, i_barang integer, plu varchar, nama_barang varchar, qty double precision, 
+satuan varchar)]]></queryString>
+
+	<field name="id_customer" class="java.lang.Long"/>
+	<field name="invoice_no" class="java.lang.String"/>
+	<field name="kirim_ke_nama" class="java.lang.String"/>
+	<field name="kirim_ke_alamat" class="java.lang.String"/>
+	<field name="kirim_ke_kota" class="java.lang.String"/>
+	<field name="id_expedisi" class="java.lang.String"/>
+	<field name="nama_expedisi" class="java.lang.String"/>
+	<field name="no_sj" class="java.lang.String"/>
+	<field name="tgl_sj" class="java.sql.Date"/>
+	<field name="hormat_kami" class="java.lang.String"/>
+	<field name="i_barang" class="java.lang.Integer"/>
+	<field name="plu" class="java.lang.String"/>
+	<field name="nama_barang" class="java.lang.String"/>
+	<field name="qty" class="java.lang.Double"/>
+	<field name="satuan" class="java.lang.String"/>
+
+	<variable name="nomor" class="java.lang.Integer" resetType="Report" calculation="Count">
+		<variableExpression><![CDATA[$F{nama_barang}]]></variableExpression>
+	</variable>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="155"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="535"
+						height="24"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" pdfFontName="Helvetica-Bold" size="14" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{toko}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="325"
+						y="45"
+						width="210"
+						height="21"
+						backcolor="#CCCCCC"
+						key="staticText-1"/>
+					<box>					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Surat Jalan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="325"
+						y="66"
+						width="80"
+						height="14"
+						key="staticText-4"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<text><![CDATA[No. Srt. Jln]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="325"
+						y="80"
+						width="80"
+						height="14"
+						key="staticText-5"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<text><![CDATA[Tanggal]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="411"
+						y="66"
+						width="124"
+						height="14"
+						key="textField-2"/>
+					<box leftPadding="2" rightPadding="2">					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{no_sj}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="dd-MMM-yyyy" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="411"
+						y="80"
+						width="124"
+						height="14"
+						key="textField-3"/>
+					<box leftPadding="2" rightPadding="2">					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{tgl_sj}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="405"
+						y="80"
+						width="6"
+						height="14"
+						key="staticText-10"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="405"
+						y="66"
+						width="6"
+						height="14"
+						key="staticText-11"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="0.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="45"
+						width="245"
+						height="14"
+						key="staticText-14"/>
+					<box leftPadding="5" rightPadding="2">					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" pdfFontName="Helvetica-Bold" size="11" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Mohon di antar ke : ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="139"
+						width="22"
+						height="16"
+						key="staticText-15"/>
+					<box leftPadding="2" rightPadding="2">					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[NO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="22"
+						y="139"
+						width="327"
+						height="16"
+						key="staticText-16"/>
+					<box leftPadding="2" rightPadding="2">					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[NAMA BARANG]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="349"
+						y="139"
+						width="82"
+						height="16"
+						key="staticText-17"/>
+					<box leftPadding="2" rightPadding="2">					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[QTY]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="431"
+						y="139"
+						width="104"
+						height="16"
+						key="staticText-18"/>
+					<box leftPadding="1" rightPadding="1">					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[SATUAN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="59"
+						width="83"
+						height="14"
+						key="staticText-32"/>
+					<box leftPadding="5" rightPadding="2">					<leftPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<text><![CDATA[Nama]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="73"
+						width="83"
+						height="14"
+						key="staticText-33"/>
+					<box leftPadding="5" rightPadding="2">					<leftPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<text><![CDATA[Alamat]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="84"
+						y="59"
+						width="7"
+						height="14"
+						key="staticText-37"/>
+					<box>					<leftPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="84"
+						y="73"
+						width="7"
+						height="14"
+						key="staticText-38"/>
+					<box>					<leftPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="84"
+						y="87"
+						width="7"
+						height="14"
+						key="staticText-39"/>
+					<box>					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="91"
+						y="59"
+						width="155"
+						height="14"
+						key="textField-24"/>
+					<box leftPadding="5" rightPadding="2">					<topPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{kirim_ke_nama}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="91"
+						y="73"
+						width="155"
+						height="14"
+						key="textField-25"/>
+					<box leftPadding="5" rightPadding="2">					<topPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{kirim_ke_alamat}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="91"
+						y="87"
+						width="155"
+						height="14"
+						key="textField-26"/>
+					<box leftPadding="5" rightPadding="2">					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{kirim_ke_kota}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="87"
+						width="84"
+						height="14"
+						key="staticText-58"/>
+					<box leftPadding="5" rightPadding="2">					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<text><![CDATA[Kota]]></text>
+				</staticText>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="14"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="22"
+						height="14"
+						key="textField-7"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1">					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{nomor}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="22"
+						y="0"
+						width="327"
+						height="14"
+						key="textField-8"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1">					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nama_barang}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="349"
+						y="0"
+						width="82"
+						height="14"
+						key="textField-9"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1">					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{qty}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="431"
+						y="0"
+						width="104"
+						height="14"
+						key="textField-11"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1">					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{satuan}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="431"
+						height="18"
+						key="textField"/>
+					<box>					<topPen lineWidth="1.5" lineStyle="Double"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="431"
+						y="0"
+						width="100"
+						height="18"
+						key="textField"/>
+					<box>					<topPen lineWidth="1.5" lineStyle="Double"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_COUNT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="104"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="84"
+						y="28"
+						width="184"
+						height="17"
+						key="staticText-51"/>
+					<box leftPadding="3" rightPadding="1">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Tahoma" pdfFontName="Helvetica" size="10" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Hormat Kami]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="268"
+						y="28"
+						width="163"
+						height="17"
+						key="staticText-52"/>
+					<box leftPadding="3" rightPadding="1">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Tahoma" pdfFontName="Helvetica" size="10" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Tanda Terima]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="119"
+						y="84"
+						width="11"
+						height="17"
+						key="staticText-54"/>
+					<box leftPadding="3" rightPadding="1">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Tahoma" pdfFontName="Helvetica" size="10" isBold="false"/>
+					</textElement>
+				<text><![CDATA[(]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="279"
+						y="84"
+						width="11"
+						height="17"
+						key="staticText-55"/>
+					<box leftPadding="3" rightPadding="1">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Tahoma" pdfFontName="Helvetica" size="10" isBold="false"/>
+					</textElement>
+				<text><![CDATA[(]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="246"
+						y="84"
+						width="11"
+						height="17"
+						key="staticText-56"/>
+					<box leftPadding="3" rightPadding="1">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Tahoma" pdfFontName="Helvetica" size="10" isBold="false"/>
+					</textElement>
+				<text><![CDATA[)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="412"
+						y="84"
+						width="11"
+						height="17"
+						key="staticText-57"/>
+					<box leftPadding="3" rightPadding="1">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Tahoma" pdfFontName="Helvetica" size="10" isBold="false"/>
+					</textElement>
+				<text><![CDATA[)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="535"
+						height="17"
+						key="staticText-59"/>
+					<box leftPadding="3" rightPadding="1">					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Tahoma" pdfFontName="Helvetica" size="10" isBold="false"/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="130"
+						y="84"
+						width="116"
+						height="14"
+						key="textField-27"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1">					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{hormat_kami}]]></textFieldExpression>
+				</textField>
+			</band>
+		</summary>
+</jasperReport>

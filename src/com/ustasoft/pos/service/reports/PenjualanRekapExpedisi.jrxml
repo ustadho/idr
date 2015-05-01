@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PenjualanRekapGudang" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="e38728d3-55df-4938-a76f-7de1f3e86663">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="toko" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Rejeki Makmur"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="alamat1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Ruko Tidar Mas Square C16"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="alamat2" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Surabaya - 6102 - Indonesia"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="telp" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Ph. 08123123123, 031-30423123"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="email" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["rejeki.makmur@yahoo.com"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tanggal1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2013-01-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tanggal2" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2013-05-31"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idCustomer" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="idSales" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="idExpedisi" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="namaGudang" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct id_faktur , no_faktur , tgl_faktur, no_so, nama_gudang, id_customer, nama_customer, alamat_customer,
+kota_customer , telp_hp, id_expedisi, nama_expedisi, jt_tempo, ket_faktur, ket_pembayaran, status_bayar,
+id_sales, nama_sales, ar_disc, ar_disc_rp, nett from fn_rpt_penjualan_detail($P{tanggal1}, $P{tanggal2}, $P{idCustomer}::int, $P{idSales}::int, $P{idExpedisi}::int) as
+(id_faktur bigint, no_faktur varchar, tgl_faktur date, no_so varchar,
+nama_gudang varchar, id_customer bigint, nama_customer varchar, alamat_customer varchar, kota_customer varchar, telp_hp varchar, id_expedisi int,
+nama_expedisi varchar, jt_tempo date, ket_faktur text, trx_type varchar, ket_pembayaran text, status_bayar text, id_sales bigint, nama_sales varchar, ar_disc varchar,
+ar_disc_rp double precision, nett double precision, plu varchar, nama_barang varchar, qty double precision, satuan varchar, unit_price double precision,
+disc varchar, ppn double precision, biaya double precision, sub_total double precision, keterangan varchar, disiapkan_oleh varchar, dibuat_oleh varchar,
+diperiksa_oleh varchar, diterima_oleh varchar)
+where case when $P{namaGudang}='' then 1=1 else nama_gudang=$P{namaGudang} end
+order by nama_expedisi]]>
+	</queryString>
+	<field name="id_faktur" class="java.lang.Long"/>
+	<field name="no_faktur" class="java.lang.String"/>
+	<field name="tgl_faktur" class="java.sql.Date"/>
+	<field name="no_so" class="java.lang.String"/>
+	<field name="nama_gudang" class="java.lang.String"/>
+	<field name="id_customer" class="java.lang.Long"/>
+	<field name="nama_customer" class="java.lang.String"/>
+	<field name="alamat_customer" class="java.lang.String"/>
+	<field name="kota_customer" class="java.lang.String"/>
+	<field name="telp_hp" class="java.lang.String"/>
+	<field name="id_expedisi" class="java.lang.Integer"/>
+	<field name="nama_expedisi" class="java.lang.String"/>
+	<field name="jt_tempo" class="java.sql.Date"/>
+	<field name="ket_faktur" class="java.lang.String"/>
+	<field name="ket_pembayaran" class="java.lang.String"/>
+	<field name="status_bayar" class="java.lang.String"/>
+	<field name="id_sales" class="java.lang.Long"/>
+	<field name="nama_sales" class="java.lang.String"/>
+	<field name="ar_disc" class="java.lang.String"/>
+	<field name="ar_disc_rp" class="java.lang.Double"/>
+	<field name="nett" class="java.lang.Double"/>
+	<variable name="nomor" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{no_faktur}]]></variableExpression>
+	</variable>
+	<variable name="totNett" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{nett}]]></variableExpression>
+	</variable>
+	<variable name="totGudang" class="java.lang.Double" resetType="Group" resetGroup="expedisi" calculation="Sum">
+		<variableExpression><![CDATA[$F{nett}]]></variableExpression>
+	</variable>
+	<group name="expedisi" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{nama_expedisi}]]></groupExpression>
+		<groupHeader>
+			<band height="30" splitType="Stretch">
+				<staticText>
+					<reportElement uuid="18212cc2-c438-45b4-9368-715683210b29" key="staticText-15" x="0" y="14" width="22" height="16"/>
+					<box leftPadding="2" rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75" lineStyle="Solid"/>
+						<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[NO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="67c73a64-1869-43fa-aba9-2439e4ed1a0c" key="staticText-16" x="22" y="14" width="64" height="16"/>
+					<box leftPadding="2" rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75" lineStyle="Solid"/>
+						<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Tanggal]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="6ab30746-b18c-488f-a83a-8343f35d8ec4" key="staticText-19" x="235" y="14" width="87" height="16"/>
+					<box leftPadding="2" rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75" lineStyle="Solid"/>
+						<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Status]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="cf821f6a-8800-4779-ac37-6db63e96ed8a" key="staticText-20" x="322" y="14" width="138" height="16"/>
+					<box leftPadding="2" rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75" lineStyle="Solid"/>
+						<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Customer]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="55204ff4-a23f-4d02-873d-b2da31f4113d" key="staticText-24" x="460" y="14" width="75" height="16"/>
+					<box leftPadding="2" rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75" lineStyle="Solid"/>
+						<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+						<rightPen lineWidth="0.75" lineStyle="Solid"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[JUMLAH]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="7aa66abf-4367-4cc2-b1eb-55c8d90fbcdd" key="staticText-55" x="179" y="14" width="56" height="16"/>
+					<box leftPadding="2" rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75" lineStyle="Solid"/>
+						<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Jt. Tempo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="b070195e-6f4c-47d0-a7e0-97400190515a" key="staticText-56" x="86" y="14" width="93" height="16"/>
+					<box leftPadding="2" rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75" lineStyle="Solid"/>
+						<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[No. Invoice]]></text>
+				</staticText>
+				<textField isBlankWhenNull="false">
+					<reportElement uuid="f2a15e04-36b3-45b8-b073-87c115277c9d" key="textField-5" x="0" y="0" width="460" height="14"/>
+					<box leftPadding="2" rightPadding="2">
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nama_expedisi}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20" splitType="Stretch">
+				<textField pattern="#,##0" isBlankWhenNull="false">
+					<reportElement uuid="c197c167-471c-4661-9b11-8318f67bcbf8" key="textField-35" x="460" y="0" width="75" height="20"/>
+					<box leftPadding="1" rightPadding="1">
+						<topPen lineWidth="1.25" lineStyle="Double"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid"/>
+						<bottomPen lineWidth="1.25" lineStyle="Double"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totGudang}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement uuid="de8b4a97-1e51-48e8-89f6-0369adeb8b10" key="textField-36" x="0" y="0" width="460" height="20"/>
+					<box leftPadding="1" rightPadding="1">
+						<topPen lineWidth="1.25" lineStyle="Double"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid"/>
+						<bottomPen lineWidth="1.25" lineStyle="Double"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total per Expedisi "+$F{nama_expedisi}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="63" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="95119492-4558-42c0-a5af-6f48e494afb0" key="textField" x="0" y="0" width="460" height="24"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{toko}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5ac8dad4-c248-4932-b510-edd5ab2443c8" key="staticText-50" x="0" y="24" width="460" height="17"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Laporan Rekap Penjualan per Expedisi]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="f107dcec-b486-46e5-8c36-70d23cb2e795" key="textField-33" x="0" y="41" width="535" height="16"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Periode : "+ $P{tanggal1}.substring(8,10)+ $P{tanggal1}.substring(4,7)+'-'+$P{tanggal1}.substring(0,4)+" S/d "+$P{tanggal2}.substring(8,10)+ $P{tanggal2}.substring(4,7)+'-'+$P{tanggal2}.substring(0,4)]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="57cf0ce7-fd53-490f-864c-43877974ae6b" key="textField-3" x="322" y="0" width="138" height="14"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nama_customer}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="f87082bb-13cb-424e-8a6e-401eb3924fdc" key="textField-2" x="86" y="0" width="93" height="14"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_faktur}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="ea14b854-5d08-464f-be51-159caf78b842" key="textField-28" x="179" y="0" width="56" height="14"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jt_tempo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="832fb50f-ec96-42d3-8b4f-2467448c1a23" key="textField-29" x="235" y="0" width="87" height="14"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status_bayar}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="f22dd80e-dadb-46d5-8546-85496d61c5a4" key="textField-7" x="0" y="0" width="22" height="14"/>
+				<box topPadding="1" leftPadding="2" rightPadding="2">
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{nomor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="false">
+				<reportElement uuid="6204ce27-e6e8-487f-acb6-95308a6b58cf" key="textField-16" x="460" y="0" width="75" height="14"/>
+				<box topPadding="1" leftPadding="2" rightPadding="2">
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nett}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="eafffda0-606a-494b-94fe-4a1d6076bf01" key="textField-38" x="22" y="0" width="64" height="14"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tgl_faktur}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="22" splitType="Stretch">
+			<textField pattern="#,##0" isBlankWhenNull="false">
+				<reportElement uuid="c338db4a-57e8-415c-bdd4-9275346c1937" key="textField-34" x="460" y="0" width="75" height="17"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="1.25" lineStyle="Double"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.25" lineStyle="Double"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totNett}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5e165b74-4b24-4fa9-b9ad-34f74a410767" key="staticText-51" x="322" y="0" width="138" height="17"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="1.25" lineStyle="Double"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.25" lineStyle="Double"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[GRAND TOTAL]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

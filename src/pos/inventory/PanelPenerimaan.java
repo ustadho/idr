@@ -1,0 +1,264 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pos.inventory;
+
+import com.ustasoft.component.GeneralFunction;
+import com.ustasoft.pos.dao.jdbc.GudangDao;
+import com.ustasoft.pos.domain.Gudang;
+import com.ustasoft.pos.domain.PenerimaanStok;
+import com.ustasoft.pos.domain.PenerimaanStokDetail;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author cak-ust
+ */
+public class PanelPenerimaan extends javax.swing.JPanel {
+    private Connection conn;
+    private GudangDao gudangDao;
+    private GeneralFunction fn=new GeneralFunction();
+    /**
+     * [
+     * Creates new form PanelPenerimaan
+     */
+    public PanelPenerimaan() {
+        initComponents();
+        table.getModel().addTableModelListener(new TableModelListener() {
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                double total=0;
+                int colSubTotal=table.getColumnModel().getColumnIndex("Sub Total");
+                for(int i=0; i<table.getRowCount(); i++){
+                    total+=GeneralFunction.udfGetDouble(table.getValueAt(i, colSubTotal));
+                }
+                lblTotal.setText(GeneralFunction.intFmt.format(total));
+            }
+        });
+    }
+    
+    public void initForm(Connection con){
+        try {
+            this.conn=con;
+            gudangDao=new GudangDao(conn);
+            cmbGudang.removeAllItems();
+            List<Gudang> lstGudang=gudangDao.cariSemuaData();
+            for(int i=0; i<lstGudang.size(); i++){
+                cmbGudang.addItem(lstGudang.get(i).getNama_gudang());
+            }
+            cmbTipeStok.removeAllItems();
+            ResultSet rs=conn.createStatement().executeQuery("select * from m_trx_type ");
+            while(rs.next()){
+                cmbTipeStok.addItem(rs.getString("keterangan"));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PanelPenerimaan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void setEnableComponent(boolean b){
+        txtNoInvoice.setEnabled(b);
+        txtKeterangan.setEnabled(b);
+        jXDatePicker1.setEnabled(b);
+        cmbGudang.setEnabled(b);
+        cmbTipeStok.setEnabled(b);
+    }
+    
+    public void showData(Integer id){
+        try {
+            String sQry="SELECT p.id, p.trx_type, t.keterangan as ket_tipe, p.id_gudang, coalesce(g.nama_gudang,'') as nama_gudang, p.tanggal, p.description, p.reff_no "
+                    + "FROM mutasi_stok p  "
+                    + "left join m_trx_type t on kode=p.trx_type "
+                    + "left join m_Gudang g on g.id=p.id_gudang "
+                    + "where p.id="+id;
+            ResultSet rs=conn.createStatement().executeQuery(sQry);
+            if(rs.next()){
+                txtNoInvoice.setText(rs.getString("reff_no"));
+                cmbGudang.setSelectedItem(rs.getString("nama_gudang"));
+                cmbTipeStok.setSelectedItem(rs.getString("ket_tipe"));
+                jXDatePicker1.setDate(rs.getDate("tanggal"));
+                txtKeterangan.setText(rs.getString("description"));
+                
+                rs.close();
+                ((DefaultTableModel)table.getModel()).setNumRows(0);
+                sQry="select d.id_barang, i.nama_barang, d.qty, d.harga, d.qty*d.harga as sub_total "
+                        + "from mutasi_stok_det d "
+                        + "inner join m_Item i on i.id=d.id_barang "
+                        + "where d.id="+id+" "
+                        + "order by inc_id";
+                rs=conn.createStatement().executeQuery(sQry);
+                while(rs.next()){
+                    ((DefaultTableModel)table.getModel()).addRow(new Object[]{
+                        table.getRowCount()+1, 
+                        rs.getInt("id_barang"), 
+                        rs.getString("nama_barang"), 
+                        rs.getDouble("qty"), 
+                        rs.getDouble("harga"), 
+                        rs.getDouble("sub_total"), 
+                        
+                    });
+                }
+                rs.close();
+                if(table.getRowCount()>1){
+                    table.setRowSelectionInterval(0, 0);
+                    table.setModel(fn.autoResizeColWidth(table, ((DefaultTableModel)table.getModel())).getModel());
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PanelPenerimaan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtNoInvoice = new javax.swing.JTextField();
+        jXDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
+        jLabel8 = new javax.swing.JLabel();
+        cmbGudang = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        txtKeterangan = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        cmbTipeStok = new javax.swing.JComboBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
+        lblTotal = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setText("Tanggal :");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 90, 20));
+
+        jLabel3.setText("No. Ref :");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 20));
+
+        txtNoInvoice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(txtNoInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 170, 20));
+        jPanel1.add(jXDatePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 150, -1));
+
+        jLabel8.setText("Gudang :");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 35, 90, 20));
+
+        cmbGudang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TUNAI", "KREDIT" }));
+        jPanel1.add(cmbGudang, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 35, 210, -1));
+
+        jLabel5.setText("Keterangan :");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 90, 20));
+
+        txtKeterangan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(txtKeterangan, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 540, 20));
+
+        jLabel9.setText("Tipe Transaksi :");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 35, 90, 20));
+
+        cmbTipeStok.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TUNAI", "KREDIT" }));
+        jPanel1.add(cmbTipeStok, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 35, 210, -1));
+
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "No", "ProductID", "Nama Barang", "Qty", "Harga", "Sub Total"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, false, true, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jScrollPane1.setViewportView(table);
+
+        lblTotal.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblTotal.setText("0");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setText("TOTAL");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(460, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))))
+                .addGap(7, 7, 7))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5))
+        );
+    }// </editor-fold>//GEN-END:initComponents
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox cmbGudang;
+    private javax.swing.JComboBox cmbTipeStok;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
+    private javax.swing.JLabel lblTotal;
+    private javax.swing.JTable table;
+    private javax.swing.JTextField txtKeterangan;
+    private javax.swing.JTextField txtNoInvoice;
+    // End of variables declaration//GEN-END:variables
+
+    public void clearData() {
+        txtKeterangan.setText("");
+        txtNoInvoice.setText("");
+        ((DefaultTableModel)table.getModel()).setNumRows(0);
+    }
+}

@@ -1,0 +1,1197 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="FakturPenjualan_30"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="612"
+		 pageHeight="393"
+		 columnWidth="552"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="14"
+		 bottomMargin="14"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.zoom" value="1.0" />
+	<property name="ireport.x" value="0" />
+	<property name="ireport.y" value="0" />
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="style1"
+		mode="Opaque"
+		backcolor="#CCCCCC"
+	>
+					<box>					<bottomPen lineWidth="1.0"/>
+</box>
+
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{nomor}.intValue() % 2 > 0 )]]></conditionExpression>
+			<style 
+			>
+			</style>
+		</conditionalStyle>
+	</style>
+
+	<parameter name="toko" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["Rejeki Makmur"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="alamat1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["Ruko Tidar Mas Square C16"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="alamat2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["Surabaya - 6102 - Indonesia"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="telp" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["Ph. 08123123123, 031-30423123"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="email" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["rejeki.makmur@yahoo.com"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idPenjualan" isForPrompting="false" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(215)]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[select * from fn_rpt_print_penjualan($P{idPenjualan}) as (id bigint, no_faktur varchar, tgl_faktur varchar, no_so varchar, nama_gudang varchar, nama_customer varchar,
+alamat_customer varchar, kota_customer varchar, telp_hp varchar, nama_expedisi varchar, jt_tempo varchar, ket_faktur text, ket_pembayaran text, status_bayar text,
+nama_sales varchar, ar_disc varchar, ar_disc_rp double precision, nett double precision, plu varchar, nama_barang varchar, qty double precision, satuan varchar, unit_price double precision, disc varchar, ppn double precision,
+biaya double precision, sub_total double precision, keterangan varchar, disiapkan_oleh varchar, dibuat_oleh varchar, diperiksa_oleh varchar, diterima_oleh varchar)]]></queryString>
+
+	<field name="id" class="java.lang.Long"/>
+	<field name="no_faktur" class="java.lang.String"/>
+	<field name="tgl_faktur" class="java.lang.String"/>
+	<field name="no_so" class="java.lang.String"/>
+	<field name="nama_gudang" class="java.lang.String"/>
+	<field name="nama_customer" class="java.lang.String"/>
+	<field name="alamat_customer" class="java.lang.String"/>
+	<field name="kota_customer" class="java.lang.String"/>
+	<field name="telp_hp" class="java.lang.String"/>
+	<field name="nama_expedisi" class="java.lang.String"/>
+	<field name="jt_tempo" class="java.lang.String"/>
+	<field name="ket_faktur" class="java.lang.String"/>
+	<field name="ket_pembayaran" class="java.lang.String"/>
+	<field name="status_bayar" class="java.lang.String"/>
+	<field name="nama_sales" class="java.lang.String"/>
+	<field name="ar_disc" class="java.lang.String"/>
+	<field name="ar_disc_rp" class="java.lang.Double"/>
+	<field name="nett" class="java.lang.Double"/>
+	<field name="plu" class="java.lang.String"/>
+	<field name="nama_barang" class="java.lang.String"/>
+	<field name="qty" class="java.lang.Double"/>
+	<field name="satuan" class="java.lang.String"/>
+	<field name="unit_price" class="java.lang.Double"/>
+	<field name="disc" class="java.lang.String"/>
+	<field name="ppn" class="java.lang.Double"/>
+	<field name="biaya" class="java.lang.Double"/>
+	<field name="sub_total" class="java.lang.Double"/>
+	<field name="keterangan" class="java.lang.String"/>
+	<field name="disiapkan_oleh" class="java.lang.String"/>
+	<field name="dibuat_oleh" class="java.lang.String"/>
+	<field name="diperiksa_oleh" class="java.lang.String"/>
+	<field name="diterima_oleh" class="java.lang.String"/>
+
+	<variable name="totQty" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
+	</variable>
+	<variable name="totBiaya" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{biaya}]]></variableExpression>
+	</variable>
+	<variable name="totSubTotal" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{sub_total}]]></variableExpression>
+	</variable>
+	<variable name="nomor" class="java.lang.Integer" resetType="Report" calculation="Count">
+		<variableExpression><![CDATA[$F{nama_barang}]]></variableExpression>
+	</variable>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="155"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="552"
+						height="24"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="14" isBold="true" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{toko}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="24"
+						width="342"
+						height="42"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{alamat1}+"\n"+
+$P{alamat2}+"\n"+
+$P{telp}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="342"
+						y="45"
+						width="210"
+						height="21"
+						backcolor="#FFFFFF"
+						key="staticText-1"/>
+					<box>					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="14" isBold="true" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[FAKTUR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="342"
+						y="66"
+						width="80"
+						height="14"
+						key="staticText-4"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[No. Faktur]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="342"
+						y="80"
+						width="80"
+						height="14"
+						key="staticText-5"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Tanggal Faktur]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="342"
+						y="122"
+						width="80"
+						height="14"
+						key="staticText-7"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Salesman]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="428"
+						y="66"
+						width="124"
+						height="14"
+						key="textField-2"/>
+					<box leftPadding="2" rightPadding="2">					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{no_faktur}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="428"
+						y="80"
+						width="124"
+						height="14"
+						key="textField-3"/>
+					<box leftPadding="2" rightPadding="2">					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{tgl_faktur}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="428"
+						y="122"
+						width="124"
+						height="14"
+						key="textField-5"/>
+					<box leftPadding="2" rightPadding="2">					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nama_sales}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="422"
+						y="80"
+						width="6"
+						height="14"
+						key="staticText-10"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="0.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="422"
+						y="66"
+						width="6"
+						height="14"
+						key="staticText-11"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="0.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="422"
+						y="122"
+						width="6"
+						height="14"
+						key="staticText-13"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="66"
+						width="83"
+						height="14"
+						key="staticText-14"/>
+					<box leftPadding="5" rightPadding="2">					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Nama Toko]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="139"
+						width="22"
+						height="16"
+						key="staticText-15"/>
+					<box leftPadding="2">					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="true" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[NO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="22"
+						y="139"
+						width="204"
+						height="16"
+						key="staticText-16"/>
+					<box leftPadding="2">					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="true" isPdfEmbedded ="false" pdfEncoding ="Cp1252"/>
+					</textElement>
+				<text><![CDATA[NAMA BARANG]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="226"
+						y="139"
+						width="37"
+						height="16"
+						key="staticText-17"/>
+					<box>					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="true" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[QTY]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="263"
+						y="139"
+						width="51"
+						height="16"
+						key="staticText-18"/>
+					<box>					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="true" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[SATUAN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="314"
+						y="139"
+						width="80"
+						height="16"
+						key="staticText-19"/>
+					<box>					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="true" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[HARGA SATUAN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="394"
+						y="139"
+						width="67"
+						height="16"
+						key="staticText-20"/>
+					<box>					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="true" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[BY LAIN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="461"
+						y="139"
+						width="91"
+						height="16"
+						key="staticText-24"/>
+					<box leftPadding="2" rightPadding="2">					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="true" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[JUMLAH]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="80"
+						width="83"
+						height="14"
+						key="staticText-32"/>
+					<box leftPadding="5" rightPadding="2">					<leftPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Alamat]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="94"
+						width="83"
+						height="14"
+						key="staticText-33"/>
+					<box leftPadding="5" rightPadding="2">					<leftPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Kota]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="108"
+						width="83"
+						height="14"
+						key="staticText-34"/>
+					<box leftPadding="5" rightPadding="2">					<leftPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Telp/ HP]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="122"
+						width="83"
+						height="14"
+						key="staticText-35"/>
+					<box leftPadding="5" rightPadding="2">					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Expedisi]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="84"
+						y="66"
+						width="7"
+						height="14"
+						key="staticText-36"/>
+					<box>					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="84"
+						y="80"
+						width="7"
+						height="14"
+						key="staticText-37"/>
+					<box>					<leftPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="84"
+						y="94"
+						width="7"
+						height="14"
+						key="staticText-38"/>
+					<box>					<leftPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="84"
+						y="108"
+						width="7"
+						height="14"
+						key="staticText-39"/>
+					<box>					<leftPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="84"
+						y="122"
+						width="7"
+						height="14"
+						key="staticText-40"/>
+					<box>					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="91"
+						y="66"
+						width="206"
+						height="14"
+						key="textField-23"/>
+					<box leftPadding="5" rightPadding="2">					<topPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nama_customer}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="91"
+						y="80"
+						width="206"
+						height="14"
+						key="textField-24"/>
+					<box leftPadding="5" rightPadding="2">					<topPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{alamat_customer}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="91"
+						y="94"
+						width="206"
+						height="14"
+						key="textField-25"/>
+					<box leftPadding="5" rightPadding="2">					<topPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{kota_customer}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="91"
+						y="108"
+						width="206"
+						height="14"
+						key="textField-26"/>
+					<box leftPadding="5" rightPadding="2">					<topPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{telp_hp}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="91"
+						y="122"
+						width="206"
+						height="14"
+						key="textField-27"/>
+					<box leftPadding="5" rightPadding="2">					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nama_expedisi}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="342"
+						y="94"
+						width="80"
+						height="14"
+						key="staticText-41"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Tgl. Jth Tempo]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="428"
+						y="94"
+						width="124"
+						height="14"
+						key="textField-28"/>
+					<box leftPadding="2" rightPadding="2">					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{jt_tempo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="422"
+						y="94"
+						width="6"
+						height="14"
+						key="staticText-42"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="0.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="342"
+						y="108"
+						width="80"
+						height="14"
+						key="staticText-43"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Status]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="428"
+						y="108"
+						width="124"
+						height="14"
+						key="textField-29"/>
+					<box leftPadding="2" rightPadding="2">					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{status_bayar}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="422"
+						y="108"
+						width="6"
+						height="14"
+						key="staticText-44"/>
+					<box leftPadding="2" rightPadding="2">					<leftPen lineWidth="0.0"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="14"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="22"
+						height="14"
+						key="textField-7"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1">					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{nomor}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="22"
+						y="0"
+						width="204"
+						height="14"
+						key="textField-8"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1">					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nama_barang}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="226"
+						y="0"
+						width="37"
+						height="14"
+						key="textField-9"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1">					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{qty}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="314"
+						y="0"
+						width="80"
+						height="14"
+						key="textField-10"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1">					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{unit_price}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="263"
+						y="0"
+						width="51"
+						height="14"
+						key="textField-11"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1">					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{satuan}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="394"
+						y="0"
+						width="67"
+						height="14"
+						key="textField-14"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1">					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{biaya}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="461"
+						y="0"
+						width="91"
+						height="14"
+						key="textField-16"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1">					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{sub_total}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="41"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="422"
+						height="20"
+						key="textField"/>
+					<box>					<topPen lineWidth="0.75"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="422"
+						y="0"
+						width="130"
+						height="20"
+						key="textField"/>
+					<box>					<topPen lineWidth="0.75"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="104"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="461"
+						y="0"
+						width="91"
+						height="14"
+						key="textField-18"/>
+					<box leftPadding="1" rightPadding="1">					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totSubTotal}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="84"
+						height="17"
+						key="staticText-25"/>
+					<box leftPadding="1" rightPadding="1">					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="true" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Pembayaran]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="308"
+						y="42"
+						width="141"
+						height="14"
+						key="staticText-30"/>
+					<box leftPadding="1" rightPadding="1">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[TOTAL]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="461"
+						y="42"
+						width="91"
+						height="14"
+						key="textField-21"/>
+					<box leftPadding="1" rightPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{nett}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="91"
+						y="0"
+						width="217"
+						height="49"
+						key="textField-30"/>
+					<box leftPadding="1" rightPadding="1">					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ket_pembayaran}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="308"
+						y="0"
+						width="141"
+						height="14"
+						key="staticText-45"/>
+					<box leftPadding="1" rightPadding="1">					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Sub Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="449"
+						y="0"
+						width="12"
+						height="14"
+						key="staticText-46"/>
+					<box leftPadding="1" rightPadding="1">					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="308"
+						y="14"
+						width="141"
+						height="14"
+						key="textField-31"/>
+					<box leftPadding="1" rightPadding="1">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Disc "+$F{ar_disc}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="449"
+						y="14"
+						width="12"
+						height="14"
+						key="staticText-47"/>
+					<box leftPadding="1" rightPadding="1">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="461"
+						y="14"
+						width="91"
+						height="14"
+						key="textField-32"/>
+					<box leftPadding="1" rightPadding="1">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{ar_disc_rp}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="84"
+						y="0"
+						width="7"
+						height="17"
+						key="staticText-48"/>
+					<box>					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="449"
+						y="42"
+						width="12"
+						height="14"
+						key="staticText-49"/>
+					<box leftPadding="1" rightPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="56"
+						width="134"
+						height="17"
+						key="staticText-50"/>
+					<box leftPadding="3" rightPadding="1">					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Barang Disiapkan Oleh :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="134"
+						y="56"
+						width="134"
+						height="17"
+						key="staticText-51"/>
+					<box leftPadding="3" rightPadding="1">					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Faktur Dibuat Oleh :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="268"
+						y="56"
+						width="134"
+						height="17"
+						key="staticText-52"/>
+					<box leftPadding="3" rightPadding="1">					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Diperiksa Oleh :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="402"
+						y="56"
+						width="150"
+						height="17"
+						key="staticText-53"/>
+					<box leftPadding="3" rightPadding="1">					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Tanda Terima :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="73"
+						width="134"
+						height="31"
+						key="textField-33"/>
+					<box leftPadding="3" rightPadding="2">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{disiapkan_oleh}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="134"
+						y="73"
+						width="134"
+						height="31"
+						key="textField-34"/>
+					<box leftPadding="3" rightPadding="2">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{dibuat_oleh}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="268"
+						y="73"
+						width="134"
+						height="31"
+						key="textField-35"/>
+					<box leftPadding="3" rightPadding="2">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+</box>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{diperiksa_oleh}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="402"
+						y="73"
+						width="150"
+						height="31"
+						key="textField-36"/>
+					<box leftPadding="3" rightPadding="2">					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{diterima_oleh}]]></textFieldExpression>
+				</textField>
+			</band>
+		</summary>
+</jasperReport>

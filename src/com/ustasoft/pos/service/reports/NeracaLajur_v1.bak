@@ -1,0 +1,1072 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="NeracaLajur_v1"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="842"
+		 pageHeight="595"
+		 columnWidth="814"
+		 columnSpacing="0"
+		 leftMargin="14"
+		 rightMargin="14"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="nama_koperasi" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["Koperasi karyawan Siloam Hospitals Surabaya"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="alamat" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["Jl. Raya Gubeng 70"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="telp" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["031-503 1333"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tahun" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["2007"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tanggal1" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["2007-01-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tanggal2" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["2010-01-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="unit" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sUnit" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[select group_id , acc_no , acc_name , saldo_debet , saldo_kredit , mutasi_d , mutasi_k , penyesuaian_d , penyesuaian_k , 
+sisa_d , sisa_k , RL_D , RL_K, Neraca_D, Neraca_K 
+from fn_acc_rpt_neraca_lajur_call($P{tanggal1}, $P{tanggal2}, $P{unit}) as (group_id varchar, acc_no varchar, 
+acc_name varchar, saldo_debet double precision, saldo_kredit double precision,
+mutasi_d double precision, mutasi_k double precision, penyesuaian_d double precision, penyesuaian_k double precision, 
+sisa_d double precision, sisa_k double precision, RL_D double precision, RL_K double precision, Neraca_D double precision, Neraca_K double precision)
+]]></queryString>
+
+	<field name="group_id" class="java.lang.String"/>
+	<field name="acc_no" class="java.lang.String"/>
+	<field name="acc_name" class="java.lang.String"/>
+	<field name="saldo_debet" class="java.lang.Double"/>
+	<field name="saldo_kredit" class="java.lang.Double"/>
+	<field name="mutasi_d" class="java.lang.Double"/>
+	<field name="mutasi_k" class="java.lang.Double"/>
+	<field name="penyesuaian_d" class="java.lang.Double"/>
+	<field name="penyesuaian_k" class="java.lang.Double"/>
+	<field name="sisa_d" class="java.lang.Double"/>
+	<field name="sisa_k" class="java.lang.Double"/>
+	<field name="rl_d" class="java.lang.Double"/>
+	<field name="rl_k" class="java.lang.Double"/>
+	<field name="neraca_d" class="java.lang.Double"/>
+	<field name="neraca_k" class="java.lang.Double"/>
+
+	<variable name="tot_saldo_d" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_debet}]]></variableExpression>
+	</variable>
+	<variable name="tot_saldo_k" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_kredit}]]></variableExpression>
+	</variable>
+	<variable name="tot_mutasi_d" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{mutasi_d}]]></variableExpression>
+	</variable>
+	<variable name="tot_mutasi_k" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{mutasi_k}]]></variableExpression>
+	</variable>
+	<variable name="tot_penyesuaian_d" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{penyesuaian_d}]]></variableExpression>
+	</variable>
+	<variable name="tot_penyesuaian_k" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{penyesuaian_k}]]></variableExpression>
+	</variable>
+	<variable name="tot_sisa_d" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{sisa_d}]]></variableExpression>
+	</variable>
+	<variable name="tot_sisa_k" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{sisa_k}]]></variableExpression>
+	</variable>
+	<variable name="tot_rl_d" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{rl_d}]]></variableExpression>
+	</variable>
+	<variable name="tot_rl_k" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{rl_k}]]></variableExpression>
+	</variable>
+	<variable name="tot_neraca_d" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{neraca_d}]]></variableExpression>
+	</variable>
+	<variable name="tot_neraca_k" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{neraca_k}]]></variableExpression>
+	</variable>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="118"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="708"
+						y="92"
+						width="106"
+						height="13"
+						key="staticText-5"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Neraca / Balance Sheet]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="496"
+						height="13"
+						key="textField"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1"></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nama_koperasi}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="13"
+						width="496"
+						height="13"
+						key="textField"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1"></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{alamat}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="26"
+						width="496"
+						height="13"
+						key="textField"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1"></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{telp}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="35"
+						y="92"
+						width="143"
+						height="26"
+						key="staticText-16"/>
+					<box leftPadding="2" rightPadding="2" topPadding="1">					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Keterangan]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="39"
+						width="814"
+						height="23"
+						key="textField-1"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0" lineColor="#999999"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Neraca Lajur"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="708"
+						y="105"
+						width="53"
+						height="13"
+						key="staticText-23"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Debet]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="761"
+						y="105"
+						width="53"
+						height="13"
+						key="staticText-24"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Kredit]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="92"
+						width="35"
+						height="26"
+						key="staticText-25"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[No. Acc]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="602"
+						y="92"
+						width="106"
+						height="13"
+						key="staticText-27"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Rugi / Laba]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="602"
+						y="105"
+						width="53"
+						height="13"
+						key="staticText-28"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Debet]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="655"
+						y="105"
+						width="53"
+						height="13"
+						key="staticText-29"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Kredit]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="496"
+						y="92"
+						width="106"
+						height="13"
+						key="staticText-30"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Neraca Sisa]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="496"
+						y="105"
+						width="53"
+						height="13"
+						key="staticText-31"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Debet]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="549"
+						y="105"
+						width="53"
+						height="13"
+						key="staticText-32"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Kredit]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="284"
+						y="92"
+						width="106"
+						height="13"
+						key="staticText-33"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Neraca Mutasi]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="284"
+						y="105"
+						width="53"
+						height="13"
+						key="staticText-34"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Debet]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="337"
+						y="105"
+						width="53"
+						height="13"
+						key="staticText-35"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Kredit]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="178"
+						y="92"
+						width="106"
+						height="13"
+						key="staticText-36"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Neraca Awal]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="178"
+						y="105"
+						width="53"
+						height="13"
+						key="staticText-37"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Debet]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="231"
+						y="105"
+						width="53"
+						height="13"
+						key="staticText-38"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Kredit]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="62"
+						width="814"
+						height="13"
+						key="textField-29"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0" lineColor="#999999"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Per tanggal : "+$P{tanggal1}.substring( 8,10)+$P{tanggal1}.substring( 4, 8 )+$P{tanggal1}.substring( 0, 4 )+
+" s/d : "+$P{tanggal2}.substring( 8,10)+$P{tanggal2}.substring( 4, 8 )+$P{tanggal2}.substring( 0, 4 )]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="75"
+						width="814"
+						height="13"
+						key="textField-30"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0" lineColor="#999999"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Unit : "+$P{sUnit}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="390"
+						y="105"
+						width="53"
+						height="13"
+						key="staticText-39"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Debet]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="443"
+						y="105"
+						width="53"
+						height="13"
+						key="staticText-40"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Kredit]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="390"
+						y="92"
+						width="106"
+						height="13"
+						key="staticText-41"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Neraca Penyesuaian]]></text>
+				</staticText>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="13"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="35"
+						height="13"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{acc_no}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="178"
+						y="0"
+						width="53"
+						height="13"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{saldo_debet}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="35"
+						y="0"
+						width="143"
+						height="13"
+						key="textField-7"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{acc_name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="231"
+						y="0"
+						width="53"
+						height="13"
+						key="textField-8"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+					<rightPen lineWidth="0.5"/>
+</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{saldo_kredit}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="284"
+						y="0"
+						width="53"
+						height="13"
+						key="textField-13"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{mutasi_d}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="337"
+						y="0"
+						width="53"
+						height="13"
+						key="textField-14"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{mutasi_k}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="496"
+						y="0"
+						width="53"
+						height="13"
+						key="textField-15"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{sisa_d}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="549"
+						y="0"
+						width="53"
+						height="13"
+						key="textField-16"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{sisa_k}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="602"
+						y="0"
+						width="53"
+						height="13"
+						key="textField-17"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{rl_d}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="655"
+						y="0"
+						width="53"
+						height="13"
+						key="textField-18"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{rl_k}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0; (#,##0)" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="708"
+						y="0"
+						width="53"
+						height="13"
+						key="textField-19"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{neraca_d}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0; (#,##0)" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="761"
+						y="0"
+						width="53"
+						height="13"
+						key="textField-20"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{neraca_k}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="390"
+						y="0"
+						width="53"
+						height="13"
+						key="textField-31"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{penyesuaian_d}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="443"
+						y="0"
+						width="53"
+						height="13"
+						key="textField-32"
+						stretchType="RelativeToBandHeight"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1">					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineColor="#999999"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{penyesuaian_k}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="13"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="35"
+						height="13"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="35"
+						y="0"
+						width="143"
+						height="13"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="15"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="178"
+						y="0"
+						width="53"
+						height="15"
+						key="textField"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="1">					<topPen lineWidth="3.0" lineStyle="Double"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{tot_saldo_d}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="178"
+						height="15"
+						key="staticText-17"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="2" rightPadding="1" topPadding="1">					<topPen lineWidth="3.0" lineStyle="Double"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[TOTAL]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="231"
+						y="0"
+						width="53"
+						height="15"
+						key="textField-12"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="1">					<topPen lineWidth="3.0" lineStyle="Double"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{tot_saldo_k}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="284"
+						y="0"
+						width="53"
+						height="15"
+						key="textField-21"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="1">					<topPen lineWidth="3.0" lineStyle="Double"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{tot_mutasi_d}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="337"
+						y="0"
+						width="53"
+						height="15"
+						key="textField-22"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="1">					<topPen lineWidth="3.0" lineStyle="Double"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{tot_mutasi_k}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="390"
+						y="0"
+						width="53"
+						height="15"
+						key="textField-23"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="1">					<topPen lineWidth="3.0" lineStyle="Double"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{tot_penyesuaian_d}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="443"
+						y="0"
+						width="53"
+						height="15"
+						key="textField-24"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="1">					<topPen lineWidth="3.0" lineStyle="Double"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{tot_penyesuaian_k}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="602"
+						y="0"
+						width="53"
+						height="15"
+						key="textField-25"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="1">					<topPen lineWidth="3.0" lineStyle="Double"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{tot_rl_d}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="655"
+						y="0"
+						width="53"
+						height="15"
+						key="textField-26"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="1">					<topPen lineWidth="3.0" lineStyle="Double"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{tot_rl_k}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="708"
+						y="0"
+						width="53"
+						height="15"
+						key="textField-27"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="1">					<topPen lineWidth="3.0" lineStyle="Double"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{tot_neraca_d}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="761"
+						y="0"
+						width="53"
+						height="15"
+						key="textField-28"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="1">					<topPen lineWidth="3.0" lineStyle="Double"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{tot_neraca_k}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="496"
+						y="0"
+						width="53"
+						height="15"
+						key="textField-33"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="1">					<topPen lineWidth="3.0" lineStyle="Double"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{tot_sisa_d}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="549"
+						y="0"
+						width="53"
+						height="15"
+						key="textField-34"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="1">					<topPen lineWidth="3.0" lineStyle="Double"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{tot_sisa_k}]]></textFieldExpression>
+				</textField>
+			</band>
+		</summary>
+</jasperReport>

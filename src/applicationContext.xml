@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!-- 
+    Membaca file jdbc.properties.
+    Isinya akan digunakan untuk mengisi variabel ${nama.variabel}
+    -->
+    <context:property-placeholder location="classpath:jdbc.properties" />
+    
+    <!-- 
+    Melakukan scanning terhadap annotation : 
+    - @Repository
+    - @Service
+    - @Controller
+    - @Component
+    Class yang memiliki annotation di atas 
+    akan diinstankan dan diisikan dependensinya
+    -->
+    <context:component-scan base-package="com.ustasoft.pos.dao.jdbc" />
+    
+    <!--
+    Mendefinisikan object dataSource
+    Konfigurasi di bawah sama dengan kode program berikut: 
+    BasicDataSource dataSource = new BasicDataSource();
+    dataSource.setMaxWait(40000);
+    dataSource.setMaxActive(80);
+    dst ...
+    -->
+    <bean id="dataSource" 
+          class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close" 
+          p:driverClassName="${jdbc.driver}" 
+          p:url="${jdbc.url}"
+          p:username="${jdbc.username}" 
+          p:password="${jdbc.password}" 
+          p:maxWait="40000"
+          p:maxActive="80" 
+          p:maxIdle="20" 
+    />
+    
+    <!-- object utama Hibernate
+    Konfigurasi : 
+    - dataSource : koneksi ke database
+    - packagesToScan : package yang berisi class @Entity
+    - hibernate.dialect : merek dan versi database yang digunakan
+    - hibernate.show_sql : untuk keperluan debug, tampilkan SQL yang dijalankan di log file
+    - hibernate.format_sql : output SQL diformat indentasi supaya mudah dibaca
+    - hibernate.hbm2ddl.auto : otomatis generate skema database
+      - update : compare database existing dengan mapping file, update kalau perlu
+      - create : bikin tabel kalau belum ada, kalau sudah ada akan diabaikan
+    -->
+    <!--
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="com.ustasoft.pos.domain" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop> 
+            </props>
+        </property>
+    </bean>
+    -->
+    <!--
+    Transaction Manager : untuk mengelola begin commit/rollback
+    -->
+    <!--
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    -->
+    
+</beans>
